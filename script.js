@@ -2,6 +2,7 @@ let questionNumber = 0;
 let selectedAnswer = 0; //0, 1, 2, 3, 4
 let questionAnswered = false;
 
+let questionText = document.querySelector('#question');
 let buttons = document.querySelectorAll('.answer');
 let submit = document.querySelector('#submit');
 
@@ -17,6 +18,15 @@ let questions = [
     },
     {
         question: 'Question 2',
+        answers: [
+            'answer 1',
+            'answer 2',
+            'answer 3',
+            'answer 4',
+        ],
+    },
+    {
+        question: 'Question 3',
         answers: [
             'answer 1',
             'answer 2',
@@ -41,14 +51,25 @@ for (let i = 0; i < buttons.length; i++) {
 
 submit.addEventListener('click', () => {
     if (questionAnswered) {
-        //move to the next question
-        if (questionNumber > 12) {
-
+        if (questionNumber === questions.length - 1) {
+            //end quiz
         } else {
-
+            //move to the next question
+            //update variables
+            questionNumber++;
+            questionAnswered = false;
+            selectedAnswer = 0;
+            //change text for next question
+            questionText.innerText = questions[questionNumber].question;
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].innerText = questions[questionNumber].answers[i];
+            }
+            submit.innerText = 'Submit';
         }
     } else {
         //submit the answer
+        questionAnswered = true;
+        submit.innerText = 'Next';
     }
 });
 
