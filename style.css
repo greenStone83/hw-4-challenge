@@ -12,10 +12,10 @@ button {
 }
 
 .answer {
-    background-color: lightblue;
+    background-color: lightgray;
 }
 
 #submit {
-    background-color: lightgreen;
+    background-color: lightblue;
     margin-top: 16px;
 }

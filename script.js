@@ -48,13 +48,15 @@ startTime = () => {
     timeLeft = quizTime;
     let timer = setInterval(() => {
         timeLeft--;
-        time.textContent = timeLeft;
+        time.innerText = timeLeft;
         if (timeLeft <= 0) {
             clearInterval(timer); //set time to 0 when wrong answer sends time into negatives
             sendMessage();
         }
     }, 1000);
 }
+
+startTime();
 
 //add event listener for each answer button
 for (let i = 0; i < buttons.length; i++) {
@@ -86,7 +88,7 @@ submit.addEventListener('click', () => {
             questionText.innerText = questions[questionNumber].question;
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].innerText = questions[questionNumber].answers[i];
-                buttons[i].setAttribute('style', 'background-color: lightblue; border-color: black;');
+                buttons[i].setAttribute('style', 'background-color: lightgray; border-color: black;');
             }
             submit.innerText = 'Submit';
         }
@@ -96,10 +98,11 @@ submit.addEventListener('click', () => {
         submit.innerText = 'Next';
         //right answer turns green
         buttons[questions[questionNumber].correctAnswer - 1].setAttribute('style', 'background-color: lightgreen;');
-        //wrong answer, if chosen, turns pink
+        //if wrong answer chosen, answer turns pink and time decreases
         if (selectedAnswer !== questions[questionNumber].correctAnswer) {
             buttons[selectedAnswer - 1].setAttribute('style', 'background-color: pink;');
-            //decrement time
+            timeLeft -= timePenalty;
+            time.innerText = timeLeft;
         }
     }
 });
