@@ -1,10 +1,15 @@
+const quizTime = 120;
+const timePenalty = 20;
+
 let questionNumber = 0;
 let selectedAnswer = 0; //0, 1, 2, 3, 4
 let questionAnswered = false;
+let timeLeft = 0;
 
 let questionText = document.querySelector('#question');
 let buttons = document.querySelectorAll('.answer');
 let submit = document.querySelector('#submit');
+let time = document.querySelector('#time');
 
 let questions = [
     {
@@ -39,16 +44,31 @@ let questions = [
     },
 ];
 
+startTime = () => {
+    timeLeft = quizTime;
+    let timer = setInterval(() => {
+        timeLeft--;
+        time.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timer); //set time to 0 when wrong answer sends time into negatives
+            sendMessage();
+        }
+    }, 1000);
+}
+
 //add event listener for each answer button
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
-        //set borders of all buttons to black
-        for (let j = 0; j < buttons.length; j++) {
-            buttons[j].setAttribute('style', 'border-color: black;');
+        //can only change answer is not submitted
+        if (!questionAnswered) {
+            //set borders of all buttons to black
+            for (let j = 0; j < buttons.length; j++) {
+                buttons[j].setAttribute('style', 'border-color: black;');
+            }
+            //set border of selected button to red
+            buttons[i].setAttribute('style', 'border-color: red;');
+            selectedAnswer = i + 1;
         }
-        //set border of selected button to red
-        buttons[i].setAttribute('style', 'border-color: red;');
-        selectedAnswer = i + 1;
     });
 }
 
@@ -66,6 +86,7 @@ submit.addEventListener('click', () => {
             questionText.innerText = questions[questionNumber].question;
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].innerText = questions[questionNumber].answers[i];
+                buttons[i].setAttribute('style', 'background-color: lightblue; border-color: black;');
             }
             submit.innerText = 'Submit';
         }
@@ -74,10 +95,11 @@ submit.addEventListener('click', () => {
         questionAnswered = true;
         submit.innerText = 'Next';
         //right answer turns green
-        buttons[questions[questionNumber].correctAnswer].setAttribute('style', 'background-color: lightgreen;');
+        buttons[questions[questionNumber].correctAnswer - 1].setAttribute('style', 'background-color: lightgreen;');
         //wrong answer, if chosen, turns pink
         if (selectedAnswer !== questions[questionNumber].correctAnswer) {
-            buttons[selectedAnswer].setAttribute('style', 'background-color: pink;');
+            buttons[selectedAnswer - 1].setAttribute('style', 'background-color: pink;');
+            //decrement time
         }
     }
 });
