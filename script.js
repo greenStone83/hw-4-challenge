@@ -15,6 +15,7 @@ let questions = [
             'answer 3',
             'answer 4',
         ],
+        correctAnswer: 1,
     },
     {
         question: 'Question 2',
@@ -24,6 +25,7 @@ let questions = [
             'answer 3',
             'answer 4',
         ],
+        correctAnswer: 1,
     },
     {
         question: 'Question 3',
@@ -33,6 +35,7 @@ let questions = [
             'answer 3',
             'answer 4',
         ],
+        correctAnswer: 1,
     },
 ];
 
@@ -70,6 +73,12 @@ submit.addEventListener('click', () => {
         //submit the answer
         questionAnswered = true;
         submit.innerText = 'Next';
+        //right answer turns green
+        buttons[questions[questionNumber].correctAnswer].setAttribute('style', 'background-color: lightgreen;');
+        //wrong answer, if chosen, turns pink
+        if (selectedAnswer !== questions[questionNumber].correctAnswer) {
+            buttons[selectedAnswer].setAttribute('style', 'background-color: pink;');
+        }
     }
 });
 
