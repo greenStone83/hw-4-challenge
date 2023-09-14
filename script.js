@@ -1,24 +1,80 @@
+let questionNumber = 0;
+let selectedAnswer = 0; //0, 1, 2, 3, 4
+let questionAnswered = false;
+
+let buttons = document.querySelectorAll('.answer');
+let submit = document.querySelector('#submit');
+
+let questions = [
+    {
+        question: 'Question 1',
+        answers: [
+            'answer 1',
+            'answer 2',
+            'answer 3',
+            'answer 4',
+        ],
+    },
+    {
+        question: 'Question 2',
+        answers: [
+            'answer 1',
+            'answer 2',
+            'answer 3',
+            'answer 4',
+        ],
+    },
+];
+
+//add event listener for each answer button
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', () => {
+        //set borders of all buttons to black
+        for (let j = 0; j < buttons.length; j++) {
+            buttons[j].setAttribute('style', 'border-color: black;');
+        }
+        //set border of selected button to red
+        buttons[i].setAttribute('style', 'border-color: red;');
+        selectedAnswer = i + 1;
+    });
+}
+
+submit.addEventListener('click', () => {
+    if (questionAnswered) {
+        //move to the next question
+        if (questionNumber > 12) {
+
+        } else {
+
+        }
+    } else {
+        //submit the answer
+    }
+});
+
 /*
 
 home screen
+    "Javascript Quiz"
     high scores
-    start button goes to quiz screen
+    start button - goes to quiz screen
 
 quiz screen
     question
     answers
     time
-    submit button gives
-        correct or incorrect answer
-        next button
+    submit button -
+        gives correct or incorrect answer
+        turns into next button
 
 results screen
     save inititals
     high score
-    submit button goes to home screen
+    submit button - goes to home screen
 
-120 seconds
-wrong answer is minus 10
+*/
+
+/*
 
 Which of the following is a programming lanuage?
 Java (the script)
@@ -99,6 +155,12 @@ let
 var
 const
 mango
+
+What is the correct way to say "ekse if" in Javascript?
+else if
+elsif
+elif
+elsa
 
 What is the colon (:) used for in Javascript?
 To start a for loop
