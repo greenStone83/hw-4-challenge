@@ -4,6 +4,10 @@ div {
     margin-top: 80px;
 }
 
+#quiz, #results {
+    display: none;
+}
+
 button {
     margin: 8px 4px;
     padding: 4px 8px;

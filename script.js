@@ -46,7 +46,7 @@ let questions = [
         correctAnswer: 1,
     },
 ];
-
+/*
 start.addEventListener('click', () => {
     //start quiz
     //start timer
@@ -57,7 +57,7 @@ save.addEventListener('click', () => {
     //save highscores
     //go to home screen
 });
-
+*/
 startTime = () => {
     timeLeft = quizTime;
     let timer = setInterval(() => {

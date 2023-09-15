@@ -7,7 +7,12 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-        <div>
+        <div id="home">
+            <h1>Javascript Quiz</h1>
+            <p class="highscore"></p>
+            <button id="start">Start</button>
+        </div>
+        <div id="quiz">
             <h1 id="question">What is your favorite color?</h1>
             <button id="answer1" class="answer">Answer 1</button><br>
             <button id="answer2" class="answer">Answer 2</button><br>
@@ -15,6 +20,12 @@
             <button id="answer4" class="answer">Answer 4</button><br>
             <button id="submit">Submit</button>
             <p id="time">120</p>
+        </div>
+        <div id="results">
+            <p>Type your initials</p>
+            <input type="text" id="input" maxlength="3"></input>
+            <p class="highscore"></p>
+            <button id="save">Save</button>     
         </div>
         <script src="script.js"></script>
     </body>
