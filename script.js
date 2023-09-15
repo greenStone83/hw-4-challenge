@@ -8,18 +8,30 @@ let timeLeft = 0;
 
 let timer;
 
+let highScore = localStorage.getItem('high-score');
+let initials = localStorage.getItem('initials');
+
+let start = document.querySelector('#start');
+
+//divs
+let home = document.querySelector('#home');
+let quiz = document.querySelector('#quiz');
+let results = document.querySelector('#results');
+
+//quiz screen
 let questionText = document.querySelector('#question');
 let buttons = document.querySelectorAll('.answer');
 let submit = document.querySelector('#submit');
 let time = document.querySelector('#time');
 
-let start = document.querySelector('#start');
+//results screen
+let selfScore = document.querySelector('#self-score');
+let record = document.querySelector('#record');
+let instruct = document.querySelector('#instruct');
+let input = document.querySelector('#input');
 let save = document.querySelector('#save');
 
-let home = document.querySelector('#home');
-let quiz = document.querySelector('#quiz');
-let results = document.querySelector('#results');
-
+//list of questions and answers
 let questions = [
     {
         question: 'Question 1',
@@ -64,11 +76,7 @@ start.addEventListener('click', () => {
         timeLeft--;
         time.innerText = timeLeft;
         if (timeLeft <= 0) {
-            //end quiz
-            quiz.setAttribute('style', 'display: none;');
-            results.setAttribute('style', 'display: block;');
-            clearInterval(timer);
-            
+            endQuiz();
         }
     }, 1000);
     //add text
@@ -78,15 +86,6 @@ start.addEventListener('click', () => {
         buttons[i].setAttribute('style', 'background-color: lightgray; border-color: black;');
     }
     submit.innerText = 'Submit';
-});
-
-//save highscores
-save.addEventListener('click', () => {
-    results.setAttribute('style', 'display: none;');
-    home.setAttribute('style', 'display: block;');
-    //reset variables
-    questionNumber = 0;
-    timeLeft = 0;
 });
 
 //add event listener for each answer button
@@ -113,10 +112,7 @@ submit.addEventListener('click', () => {
         questionAnswered = false;
         selectedAnswer = 0;
         if (questionNumber === questions.length) {
-            //end quiz
-            quiz.setAttribute('style', 'display: none;');
-            results.setAttribute('style', 'display: block;');
-            clearInterval(timer);
+            endQuiz();
         } else {
             //change text for next question
             questionText.innerText = questions[questionNumber].question;
@@ -127,17 +123,67 @@ submit.addEventListener('click', () => {
             submit.innerText = 'Submit';
         }
     } else {
-        //submit the answer
-        questionAnswered = true;
-        submit.innerText = 'Next';
-        //right answer turns green
-        buttons[questions[questionNumber].correctAnswer - 1].setAttribute('style', 'background-color: lightgreen;');
-        //if wrong answer chosen, answer turns pink and time decreases
-        if (selectedAnswer !== questions[questionNumber].correctAnswer) {
-            buttons[selectedAnswer - 1].setAttribute('style', 'background-color: pink;');
-            timeLeft -= timePenalty;
-            time.innerText = timeLeft;
+        if (selectedAnswer) {
+            //submit the answer
+            questionAnswered = true;
+            submit.innerText = 'Next';
+            //right answer turns green
+            buttons[questions[questionNumber].correctAnswer - 1].setAttribute('style', 'background-color: lightgreen;');
+            //if wrong answer chosen, answer turns pink and time decreases
+            if (selectedAnswer !== questions[questionNumber].correctAnswer) {
+                buttons[selectedAnswer - 1].setAttribute('style', 'background-color: pink;');
+                timeLeft -= timePenalty;
+                time.innerText = timeLeft;
+            }
+        } else {
+            alert('Please select an answer');
         }
+    }
+});
+
+endQuiz = () => {
+    quiz.setAttribute('style', 'display: none;');
+    results.setAttribute('style', 'display: block;');
+    clearInterval(timer);
+    //change text of results screen
+    selfScore.innerText = `You had ${timeLeft} seconds left`;
+    if (initials === null) {
+        //no record score
+        record.innerText = 'There is no record score';
+        highScore = 0;
+    } else {
+        //record score
+        record.innerText = `The record score is ${highScore} by ${initials}`;
+    }
+    if (timeLeft > highScore) {
+        //high score is beaten
+        instruct.innerText = 'Type your initials';
+        input.setAttribute('style', 'display: block;');
+        save.innerText = 'Save';
+    } else {
+        //high score is not beatn
+        instruct.innerText = 'Beat the record to save your score';
+        save.innerText = 'Back';
+    }
+}
+
+//save highscores
+save.addEventListener('click', () => {
+    if (timeLeft > highScore && input.value.length < 3) {
+        alert('Enter 3 initials');
+    } else {
+        results.setAttribute('style', 'display: none;');
+        home.setAttribute('style', 'display: block;');
+        input.setAttribute('style', 'display: none;');
+
+        localStorage.getItem('high-score', timeLeft);
+        highScore = timeLeft;
+        localStorage.getItem('initials', input.value);
+        initials = input.value;
+
+        //reset variables
+        questionNumber = 0;
+        timeLeft = 0;
     }
 });
 
