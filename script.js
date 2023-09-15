@@ -55,24 +55,10 @@ let questions = [
 
 //start quiz
 start.addEventListener('click', () => {
+    //hide and show html
     home.setAttribute('style', 'display: none;');
     quiz.setAttribute('style', 'display: block;');
-    startTime();
-});
-
-//save highscores
-save.addEventListener('click', () => {
-    results.setAttribute('style', 'display: none;');
-    home.setAttribute('style', 'display: block;');
-    questionNumber = 0;
-    selectedAnswer = 0;
-    questionAnswered = false;
-    timeLeft = 0;
-    //save highscores
-    //go to home screen
-});
-
-startTime = () => {
+    //start the timer
     timeLeft = quizTime;
     timer = setInterval(() => {
         timeLeft--;
@@ -82,9 +68,26 @@ startTime = () => {
             quiz.setAttribute('style', 'display: none;');
             results.setAttribute('style', 'display: block;');
             clearInterval(timer);
+            
         }
     }, 1000);
-}
+    //add text
+    questionText.innerText = questions[questionNumber].question;
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].innerText = questions[questionNumber].answers[i];
+        buttons[i].setAttribute('style', 'background-color: lightgray; border-color: black;');
+    }
+    submit.innerText = 'Submit';
+});
+
+//save highscores
+save.addEventListener('click', () => {
+    results.setAttribute('style', 'display: none;');
+    home.setAttribute('style', 'display: block;');
+    //reset variables
+    questionNumber = 0;
+    timeLeft = 0;
+});
 
 //add event listener for each answer button
 for (let i = 0; i < buttons.length; i++) {
@@ -102,19 +105,19 @@ for (let i = 0; i < buttons.length; i++) {
     });
 }
 
+//submit answer or next question
 submit.addEventListener('click', () => {
     if (questionAnswered) {
-        if (questionNumber === questions.length - 1) {
+        //update variables for next question
+        questionNumber++;
+        questionAnswered = false;
+        selectedAnswer = 0;
+        if (questionNumber === questions.length) {
             //end quiz
             quiz.setAttribute('style', 'display: none;');
             results.setAttribute('style', 'display: block;');
             clearInterval(timer);
         } else {
-            //move to the next question
-            //update variables
-            questionNumber++;
-            questionAnswered = false;
-            selectedAnswer = 0;
             //change text for next question
             questionText.innerText = questions[questionNumber].question;
             for (let i = 0; i < buttons.length; i++) {
