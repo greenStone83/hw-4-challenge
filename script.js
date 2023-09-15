@@ -11,6 +11,9 @@ let buttons = document.querySelectorAll('.answer');
 let submit = document.querySelector('#submit');
 let time = document.querySelector('#time');
 
+let start = document.querySelector('#start');
+let save = document.querySelector('#save');
+
 let questions = [
     {
         question: 'Question 1',
@@ -43,6 +46,17 @@ let questions = [
         correctAnswer: 1,
     },
 ];
+
+start.addEventListener('click', () => {
+    //start quiz
+    //start timer
+    //change html
+});
+
+save.addEventListener('click', () => {
+    //save highscores
+    //go to home screen
+});
 
 startTime = () => {
     timeLeft = quizTime;
@@ -106,28 +120,6 @@ submit.addEventListener('click', () => {
         }
     }
 });
-
-/*
-
-home screen
-    "Javascript Quiz"
-    high scores
-    start button - goes to quiz screen
-
-quiz screen
-    question
-    answers
-    time
-    submit button -
-        gives correct or incorrect answer
-        turns into next button
-
-results screen
-    save inititals
-    high score
-    submit button - goes to home screen
-
-*/
 
 /*
 
