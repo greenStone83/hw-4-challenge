@@ -6,6 +6,8 @@ let selectedAnswer = 0; //0, 1, 2, 3, 4
 let questionAnswered = false;
 let timeLeft = 0;
 
+let timer;
+
 let questionText = document.querySelector('#question');
 let buttons = document.querySelectorAll('.answer');
 let submit = document.querySelector('#submit');
@@ -13,6 +15,10 @@ let time = document.querySelector('#time');
 
 let start = document.querySelector('#start');
 let save = document.querySelector('#save');
+
+let home = document.querySelector('#home');
+let quiz = document.querySelector('#quiz');
+let results = document.querySelector('#results');
 
 let questions = [
     {
@@ -46,31 +52,39 @@ let questions = [
         correctAnswer: 1,
     },
 ];
-/*
+
+//start quiz
 start.addEventListener('click', () => {
-    //start quiz
-    //start timer
-    //change html
+    home.setAttribute('style', 'display: none;');
+    quiz.setAttribute('style', 'display: block;');
+    startTime();
 });
 
+//save highscores
 save.addEventListener('click', () => {
+    results.setAttribute('style', 'display: none;');
+    home.setAttribute('style', 'display: block;');
+    questionNumber = 0;
+    selectedAnswer = 0;
+    questionAnswered = false;
+    timeLeft = 0;
     //save highscores
     //go to home screen
 });
-*/
+
 startTime = () => {
     timeLeft = quizTime;
-    let timer = setInterval(() => {
+    timer = setInterval(() => {
         timeLeft--;
         time.innerText = timeLeft;
         if (timeLeft <= 0) {
-            clearInterval(timer); //set time to 0 when wrong answer sends time into negatives
-            sendMessage();
+            //end quiz
+            quiz.setAttribute('style', 'display: none;');
+            results.setAttribute('style', 'display: block;');
+            clearInterval(timer);
         }
     }, 1000);
 }
-
-startTime();
 
 //add event listener for each answer button
 for (let i = 0; i < buttons.length; i++) {
@@ -92,6 +106,9 @@ submit.addEventListener('click', () => {
     if (questionAnswered) {
         if (questionNumber === questions.length - 1) {
             //end quiz
+            quiz.setAttribute('style', 'display: none;');
+            results.setAttribute('style', 'display: block;');
+            clearInterval(timer);
         } else {
             //move to the next question
             //update variables
