@@ -204,20 +204,20 @@ let questions = [
         question: 'What is the colon (:) used for?',
         answers: [
             'To start a for loop',
-            'To separate values in an array',
+            'To compare the value of two variables',
             'To assign values to a key in an object',
             'To absorb water and electrolytes from undigested food',
         ],
-        correctAnswer: 4,
+        correctAnswer: 3,
     },
     {
         question: 'What is the semicolon (;) used for?',
         answers: [
             'To close an if statement',
-            'To take the modulus of a number',
-            'To end a declaration, initialization, function',
+            'To separate values in an array',
+            'To end a statement or function',
             'To absorb water and electrolytes from semi-undigested food',
         ],
-        correctAnswer: 4,
+        correctAnswer: 3,
     },
 ];

@@ -23,6 +23,7 @@ let questionText = document.querySelector('#question');
 let buttons = document.querySelectorAll('.answer');
 let submit = document.querySelector('#submit');
 let time = document.querySelector('#time');
+let progress = document.querySelector('#progress');
 
 //results screen
 let selfScore = document.querySelector('#self-score');
@@ -54,6 +55,7 @@ start.addEventListener('click', () => {
         buttons[i].setAttribute('style', 'background-color: white');
     }
     submit.innerText = 'Submit';
+    progress.innerText = `${questionNumber + 1}/${questions.length}`;
 });
 
 //add event listener for each answer button
@@ -89,6 +91,7 @@ submit.addEventListener('click', () => {
                 buttons[i].setAttribute('style', 'background-color: white;');
             }
             submit.innerText = 'Submit';
+            progress.innerText = `${questionNumber + 1}/${questions.length}`;
         }
     } else {
         if (selectedAnswer) {
