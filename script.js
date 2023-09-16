@@ -1,4 +1,4 @@
-const quizTime = 120;
+const quizTime = 40;
 const timePenalty = 20;
 
 let questionNumber = 0;
@@ -67,23 +67,25 @@ let questions = [
 
 //start quiz
 start.addEventListener('click', () => {
-    //hide and show html
+    //move to quiz screen
     home.setAttribute('style', 'display: none;');
     quiz.setAttribute('style', 'display: block;');
     //start the timer
     timeLeft = quizTime;
+    time.innerText = timeLeft;
     timer = setInterval(() => {
         timeLeft--;
         time.innerText = timeLeft;
         if (timeLeft <= 0) {
+            timeLeft = 0;
             endQuiz();
         }
     }, 1000);
-    //add text
+    //add quiz text
     questionText.innerText = questions[questionNumber].question;
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].innerText = questions[questionNumber].answers[i];
-        buttons[i].setAttribute('style', 'background-color: lightgray; border-color: black;');
+        buttons[i].setAttribute('style', 'background-color: white');
     }
     submit.innerText = 'Submit';
 });
@@ -93,12 +95,12 @@ for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
         //can only change answer is not submitted
         if (!questionAnswered) {
-            //set borders of all buttons to black
+            //sets all butons to white
             for (let j = 0; j < buttons.length; j++) {
-                buttons[j].setAttribute('style', 'border-color: black;');
+                buttons[j].setAttribute('style', 'background-color: white;');
             }
-            //set border of selected button to red
-            buttons[i].setAttribute('style', 'border-color: red;');
+            //sets selected button to light gray
+            buttons[i].setAttribute('style', 'background-color: lightgray;');
             selectedAnswer = i + 1;
         }
     });
@@ -118,7 +120,7 @@ submit.addEventListener('click', () => {
             questionText.innerText = questions[questionNumber].question;
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].innerText = questions[questionNumber].answers[i];
-                buttons[i].setAttribute('style', 'background-color: lightgray; border-color: black;');
+                buttons[i].setAttribute('style', 'background-color: white;');
             }
             submit.innerText = 'Submit';
         }
@@ -132,7 +134,12 @@ submit.addEventListener('click', () => {
             //if wrong answer chosen, answer turns pink and time decreases
             if (selectedAnswer !== questions[questionNumber].correctAnswer) {
                 buttons[selectedAnswer - 1].setAttribute('style', 'background-color: pink;');
+                //deduct time if answered wrong
                 timeLeft -= timePenalty;
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    endQuiz();
+                }
                 time.innerText = timeLeft;
             }
         } else {
@@ -142,6 +149,7 @@ submit.addEventListener('click', () => {
 });
 
 endQuiz = () => {
+    //move to results screen
     quiz.setAttribute('style', 'display: none;');
     results.setAttribute('style', 'display: block;');
     clearInterval(timer);
@@ -160,30 +168,44 @@ endQuiz = () => {
         instruct.innerText = 'Type your initials';
         input.setAttribute('style', 'display: block;');
         save.innerText = 'Save';
+    } else if (timeLeft === 0) {
+        //did not finish quiz
+        instruct.innerText = 'Get a score above 0 to save your score';
+        save.innerText = 'Back';
     } else {
-        //high score is not beatn
+        //high score is not beaten
         instruct.innerText = 'Beat the record to save your score';
         save.innerText = 'Back';
     }
 }
 
+reset = () => {
+    //back to home screen
+    results.setAttribute('style', 'display: none;');
+    home.setAttribute('style', 'display: block;');
+    input.setAttribute('style', 'display: none;');
+    //reset variables
+    input.value = '';
+    questionAnswered = false;
+    questionNumber = 0;
+    timeLeft = 0;
+}
+
 //save highscores
 save.addEventListener('click', () => {
-    if (timeLeft > highScore && input.value.length < 3) {
-        alert('Enter 3 initials');
+    if (timeLeft > highScore) {
+        if (input.value.length < 3) {
+            alert('Enter 3 initials');
+        } else {
+            //save variables
+            localStorage.setItem('high-score', timeLeft);
+            highScore = timeLeft;
+            localStorage.setItem('initials', input.value);
+            initials = input.value;
+            reset();
+        }
     } else {
-        results.setAttribute('style', 'display: none;');
-        home.setAttribute('style', 'display: block;');
-        input.setAttribute('style', 'display: none;');
-
-        localStorage.getItem('high-score', timeLeft);
-        highScore = timeLeft;
-        localStorage.getItem('initials', input.value);
-        initials = input.value;
-
-        //reset variables
-        questionNumber = 0;
-        timeLeft = 0;
+        reset();
     }
 });
 

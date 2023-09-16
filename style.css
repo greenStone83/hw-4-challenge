@@ -1,7 +1,11 @@
 div {
-    width: 400px;
+    width: 300px;
     margin: auto;
-    margin-top: 80px;
+    margin-top: 100px;
+}
+
+p {
+    font-size: 20px;
 }
 
 #quiz, #results {
@@ -9,17 +13,22 @@ div {
 }
 
 button {
-    margin: 8px 4px;
+    margin: 8px 0px;
     padding: 4px 8px;
     font-size: 16px;
     border-radius: 8px;
 }
 
 .answer {
-    background-color: lightgray;
+    background-color: white;
 }
 
 #submit {
     background-color: lightblue;
     margin-top: 16px;
+}
+
+input {
+    display: none;
+    margin-bottom: 8px;
 }
