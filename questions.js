@@ -134,7 +134,7 @@ let questions = [
         question: 'How do you get the length of an array?',
         answers: [
             'array.length',
-            'array.len',
+            'array.length()',
             'length(array)',
             'howLongisTheArrayPlease(array)',
         ],
