@@ -1,4 +1,4 @@
-const quizTime = 200;
+const quizTime = 240;
 const timePenalty = 20;
 
 let questionNumber = 0;

@@ -171,7 +171,7 @@ let questions = [
         correctAnswer: 1,
     },
     {
-        question: 'What does 1+1+"1" evaluate to?',
+        question: "What does 1+1+'1' evaluate to?",
         answers: [
             '3',
             '111',
@@ -181,12 +181,12 @@ let questions = [
         correctAnswer: 4,
     },
     {
-        question: 'What does "1"+"1"-1 evaluate to?',
+        question: "What does '1'+'1'-1 evaluate to?",
         answers: [
             '1 (number)',
             '1 (string)',
             'NaN',
-            '20',
+            '10',
         ],
         correctAnswer: 4,
     },
