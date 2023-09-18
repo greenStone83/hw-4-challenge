@@ -12,6 +12,7 @@ let highScore = localStorage.getItem('high-score');
 let initials = localStorage.getItem('initials');
 
 let start = document.querySelector('#start');
+let record2 = document.querySelector('#record2');
 
 //divs
 let home = document.querySelector('#home');
@@ -31,6 +32,13 @@ let record = document.querySelector('#record');
 let instruct = document.querySelector('#instruct');
 let input = document.querySelector('#input');
 let save = document.querySelector('#save');
+
+//says the record on the homescreen
+if (highScore > 0) {
+    record2.innerText = `The record score is ${highScore} by ${initials}`;
+} else {
+    record2.innerText = 'There is no record score';
+}
 
 //start quiz
 start.addEventListener('click', () => {
@@ -128,8 +136,11 @@ endQuiz = () => {
         //no record score
         record.innerText = 'There is no record score';
         highScore = 0;
+    } else if (timeLeft > highScore) {
+        //high score is beaten
+        record.innerText = `The previous record score was ${highScore} by ${initials}`;
     } else {
-        //record score
+        //high score not beaten
         record.innerText = `The record score is ${highScore} by ${initials}`;
     }
     if (timeLeft > highScore) {
@@ -158,6 +169,12 @@ reset = () => {
     questionAnswered = false;
     questionNumber = 0;
     timeLeft = 0;
+    //add record score text to home screen
+    if (highScore > 0) {
+        record2.innerText = `The record score is ${highScore} by ${initials}`;
+    } else {
+        record2.innerText = 'There is no record score';
+    }
 }
 
 //save highscores
